@@ -30,8 +30,7 @@ class RoomsController extends CnCNet_Controller_Action
         $this->player = new CnCNet_Player();
 
         $this->view->rooms = array();
-        $select = $this->room->select(Zend_Db_Table::SELECT_WITH_FROM_PART)
-                             ->setIntegrityCheck(false)
+        $select = $this->room->select()
                              ->join('games', 'games.id = rooms.game_id', array('game' => 'games.protocol'))
                              ->join('players', 'players.id = rooms.player_id', '')
                              ->join('room_players', 'room_players.player_id = players.id AND room_players.room_id = rooms.id', '')
@@ -42,8 +41,7 @@ class RoomsController extends CnCNet_Controller_Action
             $data = $row->toArray();
             $data['players'] = array();
 
-            $pselect = $this->player->select(Zend_Db_Table::SELECT_WITH_FROM_PART)
-                                    ->setIntegrityCheck(false)
+            $pselect = $this->player->select()
                                     ->join('room_players', '', array('ready'))
                                     ->where('room_players.player_id = players.id')
                                     ->where('room_players.room_id = ?', $data['id']);
@@ -75,8 +73,7 @@ class RoomsController extends CnCNet_Controller_Action
         if ($row) {
             $room = $row->toArray();
 
-            $pselect = $this->player->select(Zend_Db_Table::SELECT_WITH_FROM_PART)
-                                    ->setIntegrityCheck(false)
+            $pselect = $this->player->select()
                                     ->join('room_players', '', '')
                                     ->where('room_players.player_id = players.id')
                                     ->where('room_players.room_id = ?', $room['id']);
