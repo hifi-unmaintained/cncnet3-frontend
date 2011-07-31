@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>CnCNet 3.0</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" type="text/css" href="styles/reset.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="styles/body.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="styles/dialog.css" media="screen" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        <script type="text/javascript" src="scripts/list.js"></script>
+        <script type="text/javascript" src="scripts/cncnet.js"></script>
+    </head>
+    <body>
+        <div class="cncnet-dialog">
+            <div class="cncnet-overlay" id="cncnet-overlay"></div>
+            <div class="cncnet-view" id="cncnet-player">
+                <h3>Nickname</h3>
+                <p class="center">
+                    <input name="nickname" value="" type="text" /><br />
+                    <button type="button" name="action" value="login" />Login</button>
+                </p>
+            </div>
+            <div class="cncnet-view" id="cncnet-rooms">
+                <h3>Rooms</h3>
+                <input type="hidden" name="room" value="" />
+                <ul class="cncnet-list cncnet-rooms">
+                    <li class="template"><span class="title"></span> <span class="players"><span class="cur">0</span> / <span class="max">0</span></span></li>
+                </ul>
+                <h3>Players</h3>
+                <ul class="cncnet-list cncnet-players">
+                    <li class="template"><span class="nickname"></span><span class="ready"></span></li>
+                </ul>
+                <p class="center">
+                    <button type="button" name="action" value="join">Join</button>
+                    <button type="button" name="action" value="new">New room</button>
+                    <button type="button" name="action" value="logout">Logout</button>
+                </p>
+            </div>
+            <div class="cncnet-view" id="cncnet-game">
+                <h3>Select Game</h3>
+                <input type="hidden" name="action" value="select" />
+                <p class="center icons cncnet-box">
+                </p>
+                <p class="center">
+                    <button type="button" name="action" value="cancel">Cancel</button>
+                </p>
+            </div>
+            <div class="cncnet-view" id="cncnet-room">
+                <h3 class="icon title"></h3>
+                <input type="hidden" name="player" value="" />
+                <ul class="cncnet-list cncnet-players">
+                    <li class="template"><span class="nickname"></span><span class="ready"></span></li>
+                </ul>
+                <p class="center">
+                    <button type="button" name="action" value="start">Start</button>
+                    <button type="button" name="action" value="ready">Ready</button>
+                    <button type="button" name="action" value="kick">Kick</button>
+                    <button type="button" name="action" value="leave">Leave</button>
+                </p>
+            </div>
+            <div class="cncnet-view" id="cncnet-launch">
+                <h3>The game is starting...</h3>
+                <p class="center">Click the following link to open up your game:</p>
+                <p class="center"><a href="#">START</a></p>
+                <br />
+                <p class="center"><button type="button" name="action" value="close">Close</button></p>
+            </div>
+            <div class="cncnet-view" id="cncnet-error">
+                <h3>Network Error</h3>
+                <p class="center">There was a problem communicating with the CnCNet server. Please try again later.</p>
+                <p class="center"><button type="button" name="action" value="reconnect">Reconnect</button></p>
+            </div>
+        </div>
+    </body>
+</html>
