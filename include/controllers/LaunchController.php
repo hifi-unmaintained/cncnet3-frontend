@@ -37,11 +37,23 @@ class LaunchController extends CnCNet_Controller_Action
     public function indexAction()
     {
         $room = Zend_Registry::get('room');
+        $player = Zend_Registry::get('player');
         $stmt = $this->db->query( $this->db->select()->from('players')->join('room_players', $this->db->quoteInto('room_players.room_id = ? AND room_players.player_id = players.id', $this->session->room_id)) );
         $ips = array();
+        $lan_players = false;
         while ($row = $stmt->fetch()) {
-            if ($row['id'] != $this->session->player_id)
-                $ips[] = $row['ip'];
+            if ($row['id'] != $this->session->player_id) {
+                if ($row['ip'] == $player['ip']) {
+                    $lan_players = true;
+                } else {
+                    $ips[] = $row['ip'] . ($row['port'] != 8054 ? ':'.$row['port'] : '');
+                }
+            }
+        }
+
+        /* if we have people from the same address, enable LAN broadcasts for us */
+        if ($lan_players) {
+            $ips[] = '255.255.255.255';
         }
 
         $this->view->uri = $room['game'].'://'.implode(',', $ips);
