@@ -41,6 +41,14 @@ div.cncnet-dialog input[type=text] {
     color: white;
 }
 
+div.cncnet-dialog input[name=nickname] {
+    width: 45%;
+}
+
+div.cncnet-dialog input[name=port] {
+    width: 15%;
+}
+
 div.cncnet-dialog button {
     cursor: url(../img/cursor.png), default;
     border-top: 1px solid #cc0000;

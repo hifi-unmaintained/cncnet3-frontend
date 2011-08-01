@@ -21,6 +21,8 @@ class PlayerController extends CnCNet_Controller_Action
     public function _init()
     {
         $this->player = new CnCNet_Player();
+        $this->view->nickname = '';
+        $this->view->port = 8054;
     }
 
     public function indexAction()
@@ -33,23 +35,29 @@ class PlayerController extends CnCNet_Controller_Action
             return $this->_forward('index', 'rooms');
         }
 
-        $nickname = $this->_getParam('nickname');
+        $this->view->nickname = $this->_getParam('nickname');
+        $this->view->port = $this->_getParam('port');
 
-        if (!$nickname || strlen($nickname) < 3) {
+        if (!$this->view->nickname || strlen($this->view->nickname) < 3) {
             $this->view->message = 'Nickname needs to be at least 3 characters.';
             return;
         }
 
-        if (strlen($nickname) > 12) {
+        if (strlen($this->view->nickname) > 12) {
             $this->view->message = 'Oh come on!';
+            return;
+        }
+
+        if (!is_numeric($this->view->port) || $this->view->port < 1024 || $this->view->port > 65535) {
+            $this->view->message = 'You know what a port is, right?';
             return;
         }
 
         try {
             $player_id = $this->player->insert(array(
-                'nickname'  => $nickname,
+                'nickname'  => $this->view->nickname,
                 'ip'        => $_SERVER['REMOTE_ADDR'],
-                'port'      => 8054,
+                'port'      => $this->view->port,
                 'created'   => date('Y-m-d H:i:s'),
                 'active'    => date('Y-m-d H:i:s')
             ));

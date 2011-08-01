@@ -79,7 +79,10 @@ function cncnet_view(name, data)
         $('.cncnet-dialog').data('poll', setTimeout(function() { cncnet_ajax(name); }, data.refresh * 1000));
     }
 
-    if (name == 'rooms' && typeof data == 'object') {
+    if (name == 'player' && typeof data == 'object') {
+        $('#cncnet-player input[name=port]').val(data.port);
+    }
+    else if (name == 'rooms' && typeof data == 'object') {
         $('#cncnet-rooms ul.cncnet-players').data('list').reset();
         var list = $('#cncnet-rooms ul.cncnet-rooms').data('list');
         list.reset();
