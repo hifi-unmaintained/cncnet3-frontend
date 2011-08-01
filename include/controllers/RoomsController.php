@@ -69,6 +69,18 @@ class RoomsController extends CnCNet_Controller_Action
 
     public function joinAction()
     {
+        /* check if we are joining a room we are already in, just jump into the lobby if we are */
+        $select = $this->room->select()
+                             ->join('room_players', 'room_players.room_id = rooms.id', '')
+                             ->where('room_players.player_id = ?', $this->session->player_id)
+                             ->where('rooms.id = ?', $this->_getParam('room'));
+        $row = $select->fetchRow();
+        if ($row) {
+            $this->session->room_id = $row['id'];
+            Zend_Registry::set('room', $row->toArray());
+            return $this->_forward('index', 'room');
+        }
+
         $row = $this->room->select()->where('id = ? AND rooms.started IS NULL', $this->_getParam('room'))->fetchRow();
         if ($row) {
             $room = $row->toArray();
