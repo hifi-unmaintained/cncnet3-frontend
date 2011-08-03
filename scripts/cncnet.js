@@ -154,10 +154,17 @@ function cncnet_view(name, data)
         }
     }
     else if (name == 'launch' && typeof data == 'object') {
+        /* do this only once, the browser doesn't actually move out of the page when we do this */
+        if ($('.cncnet-dialog').data('view') != 'launch') {
+            window.location = data.uri;
+        }
         $('#cncnet-launch a').attr('href', data.uri);
     }
 
+    $('.cncnet-dialog').data('view', name);
     $('#cncnet-'+name).show();
+
+    $('#cncnet-'+name).find('input.default').focus();
 }
 
 function cncnet_ajax(controller, action, params)
