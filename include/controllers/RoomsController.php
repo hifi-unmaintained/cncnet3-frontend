@@ -20,8 +20,17 @@ class RoomsController extends CnCNet_Controller_Action
 {
     public function preDispatch()
     {
-        if (!$this->session->player_id)
+        if (!isset($this->session->player_id)) {
             return $this->_forward('init', 'index');
+        }
+
+        if (isset($this->session->room_id) && $this->session->room_id == -1) {
+            return $this->_forward('index', 'game');
+        }
+
+        if (isset($this->session->room_id) && $this->session->room_id > 0) {
+            return $this->_forward('index', 'room');
+        }
     }
 
     public function _init()
