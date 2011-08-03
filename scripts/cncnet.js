@@ -15,6 +15,11 @@
  */
 
 $(document).ready(function() {
+    $('.cncnet-dialog input').keyup(function(ev) {
+        if (ev.keyCode == '13') {
+            $(this).closest('.cncnet-view').find('button.default').click();
+        }
+    });
     $('.cncnet-dialog button').click(function() {
         $('#cncnet-overlay').show();
 
