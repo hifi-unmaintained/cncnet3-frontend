@@ -72,7 +72,7 @@ div.cncnet-dialog span.checkbox span {
     background-color: #cc0000;
 }
 
-div.cncnet-dialog button {
+div.cncnet-dialog button, div.cncnet-dialog #cncnet-launch a {
     cursor: url(../img/cursor.png), default;
     border-top: 1px solid #cc0000;
     border-left: 1px solid #cc0000;
@@ -87,7 +87,7 @@ div.cncnet-dialog button {
     margin: 0.5em;
 }
 
-div.cncnet-dialog button:active {
+div.cncnet-dialog button:active, div.cncnet-dialog #cncnet-launch a:active {
     border-top: 1px solid #400000;
     border-left: 1px solid #400000;
     border-right: 1px solid #cc0000;
@@ -248,4 +248,11 @@ div.cncnet-dialog h3
 div.cncnet-dialog a {
     color: #FF0000;
     font-weight: bold;
+}
+
+#cncnet-launch a {
+    font-weight: normal;
+    display: inline-block;
+    line-height: 2em !important;
+    text-decoration: none;
 }
