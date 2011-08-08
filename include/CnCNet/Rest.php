@@ -16,28 +16,15 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-class CncnetController extends CnCNet_Controller_Action
-{
-    public function _init ( )
-    {
-        require_once( 'Zend/Rest/Server.php' );
-        
-        $this->_server = new Zend_Rest_Server( );
-        $this->_helper->viewRenderer->setNoRender( );
-    }
-
-    public function indexAction ( )
-    {
-        $this->_server->setClass( 'CnCNetREST' );
-        $this->_server->handle( );
-    }
-}
- 
-class CnCNetREST
+class CnCNet_Rest
 {
     ///////////////////////////////////////////////////////////////////////////
     // Users
     ///////////////////////////////////////////////////////////////////////////
+    public function test()
+    {
+        return true;
+    }
     
     /**
      * /cncnet/register/user123/paSsw0rd./email
