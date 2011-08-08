@@ -15,9 +15,9 @@ CREATE TABLE players (
     active      DATETIME NOT NULL,          -- last message received
     logout      DATETIME NULL,              -- time of logout
     
-    pass_hash   VARCHAR(41) NOT NULL,       -- 41 = SHA-1 with null terminator
-    pass_salt   VARCHAR(41) NOT NULL,       -- 41 = SHA-1 with null terminator
-    sesh_key    VARCHAR(41) NULL,           -- 41 = SHA-1 with null terminator
+    pass_hash   VARCHAR(40) NOT NULL,       -- SHA-1
+    pass_salt   VARCHAR(40) NOT NULL,       -- SHA-1
+    sesh_key    VARCHAR(40) NULL,           -- SHA-1
     sesh_time   DATETIME NULL,              -- when session was created, expire for inactivity
     email       VARCHAR(255) NOT NULL       -- Probably big enough for any email
 );
@@ -30,15 +30,15 @@ CREATE INDEX players_sessions ON players (sesh_key);
 
 CREATE TABLE rooms (
     id          INTEGER PRIMARY KEY,
-    game_id     INTEGER NOT NULL,
+    game_id     INTEGER NULL,               -- NULL for Chat
     title       TEXT NOT NULL,              -- defaults to "<nickname>'s Room" for now
-    player_id   INTEGER NOT NULL,           -- the owner of the room
-    max         INTEGER NOT NULL,           -- maximum number of players, cnc95 = 6, others = 8
-    created     DATETIME NOT NULL, 
+    player_id   INTEGER NULL,               -- the owner of the room
+    max         INTEGER NULL,               -- maximum number of players, cnc95 = 6, others = 8
+    created     DATETIME NULL, 
     started     DATETIME DEFAULT NULL,      -- start flag
     
     latestart   BOOLEAN DEFAULT FALSE,      -- late start enabled
-    password    VARCHAR(41) DEFAULT "",   -- 41 SHA-1 hash of password. No need for salt here.
+    password    VARCHAR(40) NULL,           -- 40 SHA-1 hash of password. No need for salt here.
 
     FOREIGN KEY (game_id) REFERENCES games(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (player_id) REFERENCES players(id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -73,11 +73,10 @@ CREATE TABLE events (
 
 CREATE INDEX events_player ON events (player_id);
 
-INSERT INTO games VALUES (-1, 'Chat', '');
 INSERT INTO games VALUES (NULL, 'Command & Conquer', 'cnc95');
 INSERT INTO games VALUES (NULL, 'Red Alert', 'ra95');
 INSERT INTO games VALUES (NULL, 'Tiberian Sun', 'ts');
 INSERT INTO games VALUES (NULL, 'Red Alert 2', 'ra2');
 INSERT INTO games VALUES (NULL, 'Red Alert 2: Yuri''s Revenge', 'ra2yr');
 
-INSERT INTO rooms VALUES ( 0, -1, "Lobby", -1, -1, "2011-08-04 02:10:00", NULL, NULL, "" );
+INSERT INTO rooms VALUES (NULL, NULL, "Lobby", NULL, NULL, DATETIME(), NULL, 0, NULL);
